@@ -1,3 +1,21 @@
+
+const express = require('express');
+const cors = require('cors');
+const multer = require('multer');
+const app = express();
+const PORT = 5000;
+
+app.use(cors());
+app.use(express.json());
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+// Redirect route to VendorVerse
+app.get('/vendorverse', (req, res) => {
+  // Replace the URL below with your actual VendorVerse deployment URL
+  res.redirect('https://your-vendor-verse-url.com');
+});
+
 // Simple Chatbot Endpoint (mocked, ready for AI integration)
 app.post('/api/chat', express.json(), (req, res) => {
   const userMessage = req.body.message || '';
@@ -14,19 +32,7 @@ app.post('/api/chat', express.json(), (req, res) => {
   }
   res.json({ reply });
 });
-const express = require('express');
-const cors = require('cors');
-const multer = require('multer');
-const app = express();
-const PORT = 5000;
 
-app.use(cors());
-app.use(express.json());
-
-const upload = multer({ storage:multer.memoryStorage() });
-
-
-// Simulate scan result
 
 // AI-Powered Product Analysis (Mocked, ready for real API integration)
 app.post('/api/scan', upload.single('image'), async (req, res) => {

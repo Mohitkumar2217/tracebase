@@ -17,7 +17,55 @@ const COLORS = {
   inputBorder: '#a5d6a7',
 };
 
+// --- Green-White Color Palette ---
+const COLORS = {
+  background: '#f6fff8', // very light greenish white
+  card: '#ffffff', // pure white
+  cardShadow: '0 4px 16px #b7e4c7', // soft green shadow
+  primary: '#43a047', // lively green
+  primaryDark: '#2e7d32', // deeper green
+  accent: '#b7e4c7', // mint green accent
+  border: '#a5d6a7', // light green border
+  text: '#1b5e20', // dark green text
+  buttonText: '#fff', // white for buttons
+  buttonHover: '#388e3c', // slightly darker green
+  inputBg: '#f1f8e9', // pale green for inputs
+  inputBorder: '#a5d6a7',
+};
+
 function App() {
+  // Notification state
+  const [notification, setNotification] = useState(null);
+  const [notifOpen, setNotifOpen] = useState(false);
+  // Show notification (now only on bell click)
+  const showNotification = (msg, type = 'info') => {
+    setNotification({ msg, type });
+    setNotifOpen(true);
+  };
+  // Fruit animation state
+  const [fruits, setFruits] = useState([]);
+  // Fruit SVGs
+  const fruitSvgs = [
+    '<svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" fill="#ffb300" stroke="#e65100" stroke-width="2"/><ellipse cx="14" cy="10" rx="4" ry="6" fill="#fffde7" opacity=".3"/></svg>', // Mango
+    '<svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="8" ry="6" fill="#e53935"/><ellipse cx="14" cy="12" rx="4" ry="2" fill="#fff" opacity=".2"/></svg>', // Apple
+    '<svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="7" ry="5" fill="#43a047"/><ellipse cx="14" cy="12" rx="3" ry="1.5" fill="#fff" opacity=".2"/></svg>', // Watermelon
+    '<svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="6" ry="5" fill="#fbc02d"/><ellipse cx="14" cy="12" rx="2.5" ry="1.2" fill="#fff" opacity=".2"/></svg>', // Lemon
+    '<svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="7" ry="6" fill="#8bc34a"/><ellipse cx="14" cy="12" rx="3" ry="1.5" fill="#fff" opacity=".2"/></svg>', // Guava
+  ];
+  // Fruit drop handler
+  const dropFruits = (btnRect) => {
+    const newFruits = Array.from({length: 5}, (_, i) => ({
+      id: Date.now() + i + Math.random(),
+      left: btnRect.left + btnRect.width/2 + (Math.random()-0.5)*40,
+      top: btnRect.top + btnRect.height/2,
+      svg: fruitSvgs[Math.floor(Math.random()*fruitSvgs.length)],
+      delay: Math.random()*0.2
+    }));
+    setFruits(f => [...f, ...newFruits]);
+    setTimeout(() => {
+      setFruits(f => f.slice(newFruits.length));
+    }, 1200);
+  };
   // Notification state
   const [notification, setNotification] = useState(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -298,7 +346,9 @@ function App() {
 
   return (
     <div style={{
+    <div style={{
       minHeight: '100vh',
+      background: COLORS.background,
       background: COLORS.background,
       fontFamily: 'Segoe UI, Arial, sans-serif',
       padding: 0,
@@ -792,6 +842,14 @@ const cardStyle = {
   maxWidth: 210, // reduced max width
   flex: '1 1 180px',
   marginBottom: 14,
+  background: COLORS.card,
+  borderRadius: 12,
+  boxShadow: COLORS.cardShadow,
+  padding: '16px 10px', // reduced padding
+  minWidth: 180, // reduced min width
+  maxWidth: 210, // reduced max width
+  flex: '1 1 180px',
+  marginBottom: 14,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -806,8 +864,13 @@ const cardTitle = {
 const buttonStyle = {
   background: COLORS.primary,
   color: COLORS.buttonText,
+  background: COLORS.primary,
+  color: COLORS.buttonText,
   border: 'none',
   borderRadius: 8,
+  padding: '7px 18px',
+  fontSize: 15,
+  fontWeight: 600,
   padding: '7px 18px',
   fontSize: 15,
   fontWeight: 600,
@@ -821,9 +884,13 @@ const buttonStyle = {
 const iconButtonStyle = {
   background: COLORS.card,
   border: `2px solid ${COLORS.primary}`,
+  background: COLORS.card,
+  border: `2px solid ${COLORS.primary}`,
   borderRadius: '50%',
   padding: 8,
+  padding: 8,
   cursor: 'pointer',
+  boxShadow: COLORS.cardShadow,
   boxShadow: COLORS.cardShadow,
   display: 'flex',
   alignItems: 'center',
@@ -975,9 +1042,50 @@ if (typeof window !== 'undefined' && !window.__agriscan_hero_anim) {
       60% { opacity:1; transform:translateY(0) scale(1.03); }
       100% { opacity:1; transform:translateY(0) scale(1); }
     }
+    @keyframes fruitDrop {
+      0% { opacity:1; transform: translateY(0) scale(1) rotate(0deg); }
+      80% { opacity:1; }
+      100% { opacity:0; transform: translateY(120px) scale(1.2) rotate(30deg); }
+    }
+    @keyframes notifSlide {
+      0% { opacity:0; transform:translateY(-40px) scale(0.95); }
+      60% { opacity:1; transform:translateY(0) scale(1.03); }
+      100% { opacity:1; transform:translateY(0) scale(1); }
+    }
   `;
   document.head.appendChild(style);
   window.__agriscan_hero_anim = true;
+}
+
+// --- Animation Keyframes (add to <style> on mount) ---
+if (typeof window !== 'undefined' && !window.__agrinext_heavy_anim) {
+  const style = document.createElement('style');
+  style.innerHTML = `
+    @keyframes cardEntrance {
+      0% { opacity: 0; transform: translateY(60px) scale(0.9) rotate(-3deg); }
+      60% { opacity: 1; transform: translateY(-8px) scale(1.05) rotate(2deg); }
+      100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+    }
+    @keyframes buttonPop {
+      0% { transform: scale(0.8); opacity: 0; }
+      60% { transform: scale(1.1); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes dashboardFadeIn {
+      0% { opacity: 0; filter: blur(12px); }
+      100% { opacity: 1; filter: blur(0); }
+    }
+    @keyframes bgGradientMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    @keyframes inputFocus {
+      0% { box-shadow: 0 0 0 0 #43a04744; }
+      100% { box-shadow: 0 0 0 6px #43a04744; }
+    }
+  `;
+  document.head.appendChild(style);
+  window.__agrinext_heavy_anim = true;
 }
 
 export default App;
