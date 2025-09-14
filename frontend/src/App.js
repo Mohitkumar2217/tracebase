@@ -1,21 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-// --- Green-White Color Palette ---
-const COLORS = {
-  background: '#f6fff8', // very light greenish white
-  card: '#ffffff', // pure white
-  cardShadow: '0 4px 16px #b7e4c7', // soft green shadow
-  primary: '#43a047', // lively green
-  primaryDark: '#2e7d32', // deeper green
-  accent: '#b7e4c7', // mint green accent
-  border: '#a5d6a7', // light green border
-  text: '#1b5e20', // dark green text
-  buttonText: '#fff', // white for buttons
-  buttonHover: '#388e3c', // slightly darker green
-  inputBg: '#f1f8e9', // pale green for inputs
-  inputBorder: '#a5d6a7',
-};
+import { injectAnimationStyles } from './AnimationStyles';
 
 // --- Green-White Color Palette ---
 const COLORS = {
@@ -32,8 +18,11 @@ const COLORS = {
   inputBg: '#f1f8e9', // pale green for inputs
   inputBorder: '#a5d6a7',
 };
+
 
 function App() {
+  // Inject global animation styles
+  injectAnimationStyles();
   // Notification state
   const [notification, setNotification] = useState(null);
   const [notifOpen, setNotifOpen] = useState(false);
@@ -66,38 +55,7 @@ function App() {
       setFruits(f => f.slice(newFruits.length));
     }, 1200);
   };
-  // Notification state
-  const [notification, setNotification] = useState(null);
-  const [notifOpen, setNotifOpen] = useState(false);
-  // Show notification (now only on bell click)
-  const showNotification = (msg, type = 'info') => {
-    setNotification({ msg, type });
-    setNotifOpen(true);
-  };
-  // Fruit animation state
-  const [fruits, setFruits] = useState([]);
-  // Fruit SVGs
-  const fruitSvgs = [
-    '<svg width="28" height="28" viewBox="0 0 28 28"><circle cx="14" cy="14" r="12" fill="#ffb300" stroke="#e65100" stroke-width="2"/><ellipse cx="14" cy="10" rx="4" ry="6" fill="#fffde7" opacity=".3"/></svg>', // Mango
-    '<svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="8" ry="6" fill="#e53935"/><ellipse cx="14" cy="12" rx="4" ry="2" fill="#fff" opacity=".2"/></svg>', // Apple
-    '<svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="7" ry="5" fill="#43a047"/><ellipse cx="14" cy="12" rx="3" ry="1.5" fill="#fff" opacity=".2"/></svg>', // Watermelon
-    '<svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="6" ry="5" fill="#fbc02d"/><ellipse cx="14" cy="12" rx="2.5" ry="1.2" fill="#fff" opacity=".2"/></svg>', // Lemon
-    '<svg width="28" height="28" viewBox="0 0 28 28"><ellipse cx="14" cy="16" rx="7" ry="6" fill="#8bc34a"/><ellipse cx="14" cy="12" rx="3" ry="1.5" fill="#fff" opacity=".2"/></svg>', // Guava
-  ];
-  // Fruit drop handler
-  const dropFruits = (btnRect) => {
-    const newFruits = Array.from({length: 5}, (_, i) => ({
-      id: Date.now() + i + Math.random(),
-      left: btnRect.left + btnRect.width/2 + (Math.random()-0.5)*40,
-      top: btnRect.top + btnRect.height/2,
-      svg: fruitSvgs[Math.floor(Math.random()*fruitSvgs.length)],
-      delay: Math.random()*0.2
-    }));
-    setFruits(f => [...f, ...newFruits]);
-    setTimeout(() => {
-      setFruits(f => f.slice(newFruits.length));
-    }, 1200);
-  };
+  // ...existing code...
   // Multilingual Support
   const [language, setLanguage] = useState('en');
   const translations = {
@@ -346,9 +304,7 @@ function App() {
 
   return (
     <div style={{
-    <div style={{
       minHeight: '100vh',
-      background: COLORS.background,
       background: COLORS.background,
       fontFamily: 'Segoe UI, Arial, sans-serif',
       padding: 0,
@@ -446,6 +402,9 @@ function App() {
         display: 'flex',
         alignItems: 'center',
         gap: 16,
+        transform: 'scale(1)',
+        opacity: 1,
+        transition: 'transform 0.4s cubic-bezier(.5,1.5,.5,1), opacity 0.4s',
       }}>
         <span style={{flex:1}}>{notification.msg}</span>
         <button onClick={()=>setNotifOpen(false)} style={{background:'none',border:'none',color:'#fff',fontSize:22,cursor:'pointer',fontWeight:700,lineHeight:1}}>×</button>
@@ -524,6 +483,7 @@ function App() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
           }}>
             <h2 style={cardTitle}>
               <span style={{ verticalAlign: 'middle', marginRight: 8 }}>
@@ -574,6 +534,7 @@ function App() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
           }}>
             <h2 style={cardTitle}>
               <span style={{ verticalAlign: 'middle', marginRight: 8 }}>
@@ -624,6 +585,7 @@ function App() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
           }}>
             <h2 style={cardTitle}>{t.uploadScan}</h2>
             <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
@@ -687,8 +649,8 @@ function App() {
             </button>
             {/* Modal Popup for Scan Result */}
             {showModal && scanResult && (
-              <div style={modalOverlayStyle} onClick={() => setShowModal(false)}>
-                <div style={modalStyle} onClick={e => e.stopPropagation()}>
+              <div style={{...modalOverlayStyle, animation: 'notifSlide 0.5s cubic-bezier(.5,1.5,.5,1)'}} onClick={() => setShowModal(false)}>
+                <div style={{...modalStyle, transform: 'scale(1)', opacity: 1, transition: 'transform 0.4s cubic-bezier(.5,1.5,.5,1), opacity 0.4s'}} onClick={e => e.stopPropagation()}>
                   <h3 style={{ color: '#388e3c', marginBottom: 10 }}>Scan Result</h3>
                   <p><b>Product:</b> {scanResult.product}</p>
                   <p><b>Status:</b> <span style={{ color: scanResult.safeToUse ? '#388e3c' : '#d32f2f', fontWeight: 600 }}>{scanResult.safeToUse ? "Safe" : "Not Safe"}</span></p>
@@ -722,6 +684,7 @@ function App() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
           }}>
             <h2 style={cardTitle}>
               {/* Weather SVG icon */}
@@ -827,6 +790,140 @@ function App() {
       }}>
         &copy; {new Date().getFullYear()} AgriNext
       </footer>
+      {/* Floating Chat Button */}
+      <button
+        style={{
+          position: 'fixed',
+          bottom: 32,
+          right: 32,
+          zIndex: 5000,
+          background: COLORS.primary,
+          color: COLORS.buttonText,
+          border: 'none',
+          borderRadius: '50%',
+          width: 60,
+          height: 60,
+          boxShadow: COLORS.cardShadow,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 32,
+          cursor: 'pointer',
+          transition: 'background 0.2s, box-shadow 0.2s, transform 0.1s',
+          outline: 'none',
+          animation: 'buttonPop 0.7s',
+        }}
+        title="Open Chatbot"
+        onClick={() => setChatOpen(true)}
+      >
+        <span role="img" aria-label="Chat">💬</span>
+      </button>
+
+      {/* Chatbot Modal */}
+      {chatOpen && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,0,0,0.25)',
+          zIndex: 6000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          animation: 'notifSlide 0.5s cubic-bezier(.5,1.5,.5,1)',
+        }} onClick={() => setChatOpen(false)}>
+          <div style={{
+            background: COLORS.card,
+            borderRadius: 18,
+            boxShadow: COLORS.cardShadow,
+            minWidth: 320,
+            maxWidth: 400,
+            width: '90vw',
+            minHeight: 380,
+            maxHeight: 520,
+            display: 'flex',
+            flexDirection: 'column',
+            padding: 0,
+            position: 'relative',
+            transform: 'scale(1)',
+            opacity: 1,
+            transition: 'transform 0.4s cubic-bezier(.5,1.5,.5,1), opacity 0.4s',
+          }} onClick={e => e.stopPropagation()}>
+            <div style={{
+              background: COLORS.primary,
+              color: COLORS.buttonText,
+              borderTopLeftRadius: 18,
+              borderTopRightRadius: 18,
+              padding: '16px 20px',
+              fontWeight: 700,
+              fontSize: 20,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+              <span>AgriScan Chatbot</span>
+              <button onClick={() => setChatOpen(false)} style={{background:'none',border:'none',color:'#fff',fontSize:22,cursor:'pointer',fontWeight:700,lineHeight:1}}>×</button>
+            </div>
+            <div style={{ flex: 1, padding: 18, overflowY: 'auto', background: COLORS.inputBg }}>
+              {chatHistory.length === 0 && (
+                <div style={{ color: COLORS.text, opacity: 0.7, textAlign: 'center', marginTop: 40 }}>{t.askAnything}</div>
+              )}
+              {chatHistory.map((msg, idx) => (
+                <div key={idx} style={{
+                  margin: '10px 0',
+                  textAlign: msg.from === 'user' ? 'right' : 'left',
+                  animation: 'cardEntrance 0.7s cubic-bezier(.5,1.5,.5,1)',
+                }}>
+                  <span style={{
+                    display: 'inline-block',
+                    background: msg.from === 'user' ? COLORS.primary : COLORS.accent,
+                    color: msg.from === 'user' ? COLORS.buttonText : COLORS.text,
+                    borderRadius: 12,
+                    padding: '8px 14px',
+                    maxWidth: '80%',
+                    fontSize: 15,
+                    wordBreak: 'break-word',
+                    boxShadow: msg.from === 'user' ? '0 2px 8px #43a04722' : '0 2px 8px #b7e4c722',
+                    animation: 'cardEntrance 0.7s cubic-bezier(.5,1.5,.5,1)',
+                  }}>{msg.text}</span>
+                </div>
+              ))}
+            </div>
+            <form onSubmit={sendChatMessage} style={{ display: 'flex', borderTop: `1px solid ${COLORS.inputBorder}`, background: COLORS.card, borderBottomLeftRadius: 18, borderBottomRightRadius: 18 }}>
+              <input
+                type="text"
+                value={chatInput}
+                onChange={e => setChatInput(e.target.value)}
+                placeholder="Type your message..."
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  outline: 'none',
+                  padding: '14px 16px',
+                  fontSize: 16,
+                  borderBottomLeftRadius: 18,
+                  background: COLORS.inputBg,
+                  color: COLORS.text,
+                }}
+                autoFocus
+              />
+              <button type="submit" style={{
+                background: COLORS.primary,
+                color: COLORS.buttonText,
+                border: 'none',
+                borderBottomRightRadius: 18,
+                padding: '0 22px',
+                fontSize: 18,
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'background 0.2s',
+              }}>{t.send}</button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -864,23 +961,40 @@ const cardTitle = {
 const buttonStyle = {
   background: COLORS.primary,
   color: COLORS.buttonText,
-  background: COLORS.primary,
-  color: COLORS.buttonText,
   border: 'none',
   borderRadius: 8,
   padding: '7px 18px',
   fontSize: 15,
   fontWeight: 600,
-  padding: '7px 18px',
-  fontSize: 15,
-  fontWeight: 600,
   cursor: 'pointer',
   boxShadow: COLORS.cardShadow,
-  transition: 'background 0.2s, box-shadow 0.2s, transform 0.1s',
+  transition: 'background 0.2s, box-shadow 0.2s, transform 0.13s, scale 0.13s',
   outline: 'none',
   margin: '6px 0',
   letterSpacing: 0.5,
 };
+
+// Add global button/input hover/focus animation styles
+if (typeof window !== 'undefined' && !window.__agrinext_btn_anim) {
+  const style = document.createElement('style');
+  style.innerHTML = `
+    button, input[type="button"], input[type="submit"] {
+      transition: background 0.2s, box-shadow 0.2s, transform 0.13s, scale 0.13s;
+    }
+    button:hover, button:focus, input[type="button"]:hover, input[type="button"]:focus, input[type="submit"]:hover, input[type="submit"]:focus {
+      background: #388e3c !important;
+      box-shadow: 0 6px 24px #43a04744 !important;
+      transform: scale(1.07) !important;
+    }
+    input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus {
+      box-shadow: 0 0 0 6px #43a04744 !important;
+      border-color: #43a047 !important;
+      transition: box-shadow 0.2s, border 0.2s;
+    }
+  `;
+  document.head.appendChild(style);
+  window.__agrinext_btn_anim = true;
+}
 const iconButtonStyle = {
   background: COLORS.card,
   border: `2px solid ${COLORS.primary}`,
@@ -1083,6 +1197,7 @@ if (typeof window !== 'undefined' && !window.__agrinext_heavy_anim) {
       0% { box-shadow: 0 0 0 0 #43a04744; }
       100% { box-shadow: 0 0 0 6px #43a04744; }
     }
+    /* Floating icons and hero background already have float1, float2, float3, bgMove keyframes above. */
   `;
   document.head.appendChild(style);
   window.__agrinext_heavy_anim = true;
