@@ -57,28 +57,9 @@ function App() {
   };
   // ...existing code...
   // Multilingual Support
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState('pa');
   const translations = {
-    en: {
-      scanProduct: 'Scan Product',
-      enterProduct: 'Enter product name',
-      speakProduct: 'Speak product name',
-      uploadScan: 'Upload/Scan Crop Photo',
-      diseasePest: 'Disease & Pest Detection',
-      healthy: 'Healthy',
-      diseaseDetected: 'Disease Detected',
-      pestDetected: 'Pest Detected',
-      analyzing: 'Analyzing image...',
-      cropCalendar: 'Crop Calendar',
-      selectCrop: 'Select Crop:',
-      keyDates: 'Key Dates:',
-      weatherPrediction: 'Weather Prediction',
-      marketPrices: 'Market Prices',
-      chatbot: 'AgriScan Chatbot',
-      askAnything: 'Ask me anything about farming, weather, or market prices!',
-      send: 'Send',
-      close: 'Close',
-    },pa: {
+    pa: {
     scanProduct: "ਉਤਪਾਦ ਸਕੈਨ ਕਰੋ",
     enterProduct: "ਉਤਪਾਦ ਦਾ ਨਾਮ ਦਰਜ ਕਰੋ",
     speakProduct: "ਉਤਪਾਦ ਦਾ ਨਾਮ ਬੋਲੋ",
@@ -98,6 +79,26 @@ function App() {
     send: "ਭੇਜੋ",
     close: "ਬੰਦ ਕਰੋ",
   },
+    en: {
+      scanProduct: 'Scan Product',
+      enterProduct: 'Enter product name',
+      speakProduct: 'Speak product name',
+      uploadScan: 'Upload/Scan Crop Photo',
+      diseasePest: 'Disease & Pest Detection',
+      healthy: 'Healthy',
+      diseaseDetected: 'Disease Detected',
+      pestDetected: 'Pest Detected',
+      analyzing: 'Analyzing image...',
+      cropCalendar: 'Crop Calendar',
+      selectCrop: 'Select Crop:',
+      keyDates: 'Key Dates:',
+      weatherPrediction: 'Weather Prediction',
+      marketPrices: 'Market Prices',
+      chatbot: 'AgriScan Chatbot',
+      askAnything: 'Ask me anything about farming, weather, or market prices!',
+      send: 'Send',
+      close: 'Close',
+    },
     hi: {
       scanProduct: 'उत्पाद स्कैन करें',
       enterProduct: 'उत्पाद का नाम दर्ज करें',
@@ -166,12 +167,15 @@ function App() {
   };
   // Crop Calendar State
   const cropOptions = [
+    { name: 'Select', calendar: [
+    ]},
     { name: 'Wheat', calendar: [
       { stage: 'Sowing', date: 'Nov 10' },
       { stage: 'Irrigation', date: 'Dec 1' },
       { stage: 'Fertilization', date: 'Dec 20' },
       { stage: 'Harvesting', date: 'Mar 25' },
     ]},
+     
     { name: 'Rice', calendar: [
       { stage: 'Sowing', date: 'June 15' },
       { stage: 'Irrigation', date: 'July 5' },
@@ -333,7 +337,7 @@ function App() {
     }}>
       {/* Navbar */}
       <nav style={{
-        width: '100%',
+        width: '96%',
         height: 56,
         background: COLORS.primary,
         color: COLORS.buttonText,
@@ -348,7 +352,7 @@ function App() {
         zIndex: 100,
         position: 'relative',
       }}>
-        <span style={{fontWeight: 800, fontSize: 24, letterSpacing: 2}}>🌱 AgriNext</span>
+        <span style={{fontWeight: 800, fontSize: 24, letterSpacing: 2}}>🌱 Krishi Saarthi</span>
         <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
           {/* Bell Icon for Notification */}
           <button
@@ -375,30 +379,12 @@ function App() {
           </button>
           {/* Language Selector */}
           <select value={language} onChange={e => setLanguage(e.target.value)} style={{ padding: '6px 12px', borderRadius: 6, border: `1px solid ${COLORS.border}`, fontSize: 15, background: COLORS.card, color: COLORS.text, fontWeight: 600 }}>
+            <option value="pa">ਗੁਰਮੁਖੀ</option>
             <option value="en">English</option>
             <option value="hi">हिन्दी</option>
             <option value="ta">தமிழ்</option>
-            <option value="pa">ਗੁਰਮੁਖੀ</option>
+            
           </select>
-          {/* Vendor Verse Button */}
-          <button
-            style={{
-              marginLeft: 10,
-              background: COLORS.primary,
-              color: COLORS.buttonText,
-              border: 'none',
-              borderRadius: 8,
-              padding: '7px 18px',
-              fontSize: 15,
-              fontWeight: 600,
-              cursor: 'pointer',
-              boxShadow: COLORS.cardShadow,
-              transition: 'background 0.2s',
-            }}
-            onClick={() => window.open('http://localhost:5000/vendorverse', '_blank')}
-          >
-            Go to Vendor Verse
-          </button>
         </div>
       </nav>
     {/* Notification Alert */}
@@ -459,22 +445,20 @@ function App() {
         minHeight: 400,
       }}>
         {/* Autoplay Video Banner */}
-        <video
-          src="https://www.w3schools.com/html/mov_bbb.mp4" // Replace with your farming/nature video URL
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{
-            width: 260,
-            height: 120,
-            objectFit: 'cover',
-            borderRadius: 16,
-            boxShadow: COLORS.cardShadow,
-            marginBottom: 18,
-            background: COLORS.card
-          }}
-        />
+     <img
+  src="pic.jpg" // Replace with your farming/nature image
+  alt="Farming Banner"
+  style={{
+    width: 300,
+    height: 161,
+    objectFit: 'cover',
+    borderRadius: 16,
+    boxShadow: COLORS.cardShadow,
+    marginBottom: 18,
+    background: COLORS.card
+  }}
+/>
+
         {/* Dashboard cards */}
         <div style={{
           display: 'flex',
@@ -490,57 +474,149 @@ function App() {
           margin: '0 auto',
           minHeight: 400,
         }}>
-          {/* Disease & Pest Detection Card */}
-          <section style={{
-            background: COLORS.card,
-            borderRadius: 12,
-            boxShadow: COLORS.cardShadow,
-            padding: '18px 14px',
-            minWidth: 220,
-            maxWidth: 250,
-            flex: '1 1 220px',
-            marginBottom: 16,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
-          }}>
-            <h2 style={cardTitle}>
-              <span style={{ verticalAlign: 'middle', marginRight: 8 }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" fill="#d32f2f"/>
-                  <path d="M8 12l2 2 4-4" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-              {t.diseasePest}
-            </h2>
-            <input
-              id="diseaseInput"
-              type="file"
-              accept="image/*"
-              capture="environment"
-              style={{ display: 'none' }}
-              onChange={handleDiseaseImageChange}
-            />
-            <button
-              style={{ ...buttonStyle, marginBottom: 10, width: '100%' }}
-              onClick={e => {
-                document.getElementById('diseaseInput').click();
-                const rect = e.target.getBoundingClientRect();
-                dropFruits(rect);
-                // showNotification('Disease/Pest scan started!', 'info');
-              }}
-            >
-              Upload/Scan Crop Photo
-            </button>
-            {diseaseLoading && <div style={{ color: '#388e3c', margin: '10px 0' }}>Analyzing image...</div>}
-            {diseaseResult && (
-              <div style={{ marginTop: 10, background: '#f1f8e9', borderRadius: 8, padding: 12, textAlign: 'left' }}>
-                <b style={{ color: diseaseResult.color }}>{diseaseResult.status}</b>
-                <p style={{ margin: '6px 0 0 0' }}>{diseaseResult.message}</p>
-              </div>
-            )}
-          </section>
+          {/* Vendor Verse Card */}
+<section
+  style={{
+    position: 'relative',
+    background: COLORS.card,
+    borderRadius: 12,
+    boxShadow: COLORS.cardShadow,
+    padding: '18px 14px',
+    minWidth: 220,
+    maxWidth: 250,
+    flex: '1 1 220px',
+    marginBottom: 16,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
+  }}
+>
+  {/* Coming Soon Flag (Top-Left Corner) */}
+  <div
+    style={{
+      position: 'absolute',
+      top: -8,
+      left: -8,
+      background: '#ff5252',
+      color: '#fff',
+      fontSize: 10,
+      fontWeight: 'bold',
+      padding: '4px 8px',
+      borderRadius: '8px',
+      boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+      transform: 'rotate(-10deg)',
+    }}
+  >
+    Coming Soon
+  </div>
+
+  <h2 style={cardTitle}>
+    <span style={{ verticalAlign: 'middle', marginRight: 8 }}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="26"
+        height="26"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <rect x="3" y="3" width="18" height="18" rx="3" fill="#8bc34a" />
+        <circle cx="9" cy="9" r="2" fill="#fff" />
+        <circle cx="15" cy="9" r="2" fill="#fff" />
+        <circle cx="9" cy="15" r="2" fill="#fff" />
+        <circle cx="15" cy="15" r="2" fill="#fff" />
+      </svg>
+    </span>
+    Vendor Verse
+  </h2>
+
+  <button
+    style={{ ...buttonStyle, marginBottom: 10, width: '100%' }}
+    onClick={() => window.open('http://localhost:5000/vendorverse', '_blank')}
+    disabled
+  >
+    Connect with Vendors
+  </button>
+
+  <p style={{ textAlign: 'center', fontSize: 14, color: COLORS.text }}>
+    Find agricultural suppliers, equipment dealers, and service providers
+  </p>
+</section>
+
+
+         {/* Disease & Pest Detection Card */}
+<section style={{
+  position: 'relative', // needed for the flag
+  background: COLORS.card,
+  borderRadius: 12,
+  boxShadow: COLORS.cardShadow,
+  padding: '18px 14px',
+  minWidth: 220,
+  maxWidth: 250,
+  flex: '1 1 220px',
+  marginBottom: 16,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
+}}>
+
+  {/* AI Powered Flag */}
+  <div style={{
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    background: '#f41404ff',
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 600,
+    padding: '2px 8px',
+    borderRadius: 6,
+    zIndex: 5,
+    textTransform: 'uppercase',
+  }}>
+    AI Powered
+  </div>
+
+  <h2 style={cardTitle}>
+    {t.diseasePest}
+  </h2>
+
+  <input
+    id="diseaseInput"
+    type="file"
+    accept="image/*"
+    capture="environment"
+    style={{ display: 'none' }}
+    onChange={handleDiseaseImageChange}
+  />
+
+  <button
+    style={{ ...buttonStyle, marginBottom: 10, width: '100%' }}
+    onClick={e => {
+      document.getElementById('diseaseInput').click();
+      const rect = e.target.getBoundingClientRect();
+      dropFruits(rect);
+    }}
+  >
+    Upload/Scan Crop Photo
+  </button>
+
+  <p style={{ textAlign: 'center', fontSize: 14, color: COLORS.text }}>
+    See the disease by uploading a photo.
+  </p>
+
+  {diseaseLoading && <div style={{ color: '#388e3c', margin: '10px 0' }}>Analyzing image...</div>}
+
+  {diseaseResult && (
+    <div style={{ marginTop: 10, background: '#f1f8e9', borderRadius: 8, padding: 12, textAlign: 'left' }}>
+      <b style={{ color: diseaseResult.color }}>{diseaseResult.status}</b>
+      <p style={{ margin: '6px 0 0 0' }}>{diseaseResult.message}</p>
+    </div>
+  )}
+
+</section>
+
           {/* Crop Calendar Card */}
           <section style={{
             background: COLORS.card,
@@ -593,207 +669,279 @@ function App() {
             </div>
           </section>
           {/* Scan Product Card */}
-          <section style={{
-            background: COLORS.card,
-            borderRadius: 12,
-            boxShadow: COLORS.cardShadow,
-            padding: '18px 14px',
-            minWidth: 220,
-            maxWidth: 250,
-            flex: '1 1 220px',
-            marginBottom: 16,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
-          }}>
-            <h2 style={cardTitle}>{t.uploadScan}</h2>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
-              <input
-                type="text"
-                placeholder="Enter product name"
-                value={product}
-                onChange={e => setProduct(e.target.value)}
-                style={inputStyle}
-              />
-              <button
-                style={{ ...iconButtonStyle, background: listening ? '#ffeb3b' : COLORS.card, color: listening ? '#222' : COLORS.primary, border: listening ? `2px solid ${COLORS.primary}` : `2px solid ${COLORS.primary}` }}
-                title="Speak product name"
-                onClick={handleVoiceInput}
-              >
-                {listening ? (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={COLORS.primary} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/><line x1="12" y1="22" x2="12" y2="18"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
-                ) : (
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={COLORS.primary} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2"/><line x1="12" y1="22" x2="12" y2="18"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
-                )}
-              </button>
-            </div>
-            <label htmlFor="cameraInput" style={{ fontSize: 14, color: '#388e3c', marginBottom: 8, display: 'block', textAlign: 'center' }}>
-              {t.UseYourCameraToScanAProduct}
-            </label>
-            <input
-              id="cameraInput"
-              type="file"
-              accept="image/*"
-              capture="environment"
-              ref={fileInputRef}
-              style={{ display: 'none' }}
-              onChange={handleImageChange}
-            />
-            <button
-              style={{
-                ...iconButtonStyle,
-                marginTop: 10,
-                position: 'relative',
-                overflow: 'visible'
-              }}
-              title="Scan with Camera"
-              onClick={e => {
-                e.preventDefault();
-                if (fileInputRef.current) fileInputRef.current.click();
-                const rect = e.target.getBoundingClientRect();
-                dropFruits(rect);
-              }}
-              onMouseDown={e => {
-                const rect = e.target.getBoundingClientRect();
-                dropFruits(rect);
-              }}
-            >
-              {/* Camera SVG icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24">
-                <rect width="20" height="14" x="2" y="7" rx="3" fill="#388e3c"/>
-                <circle cx="12" cy="14" r="4" fill="#fff"/>
-                <circle cx="12" cy="14" r="2" fill="#388e3c"/>
-                <rect width="6" height="2" x="9" y="4" rx="1" fill="#388e3c"/>
-              </svg>
-            </button>
-            {/* Modal Popup for Scan Result */}
-            {showModal && scanResult && (
-              <div style={{...modalOverlayStyle, animation: 'notifSlide 0.5s cubic-bezier(.5,1.5,.5,1)'}} onClick={() => setShowModal(false)}>
-                <div style={{...modalStyle, transform: 'scale(1)', opacity: 1, transition: 'transform 0.4s cubic-bezier(.5,1.5,.5,1), opacity 0.4s'}} onClick={e => e.stopPropagation()}>
-                  <h3 style={{ color: '#388e3c', marginBottom: 10 }}>Scan Result</h3>
-                  <p><b>Product:</b> {scanResult.product}</p>
-                  <p><b>Status:</b> <span style={{ color: scanResult.safeToUse ? '#388e3c' : '#d32f2f', fontWeight: 600 }}>{scanResult.safeToUse ? "Safe" : "Not Safe"}</span></p>
-                  <p>{scanResult.message}</p>
-                  {/* Show AI analysis details if present */}
-                  {scanResult.aiAnalysis && (
-                    <div style={{ marginTop: 16, background: '#f1f8e9', borderRadius: 8, padding: 12, textAlign: 'left' }}>
-                      <h4 style={{ margin: '0 0 8px 0', color: '#388e3c' }}>AI Analysis</h4>
-                      <p><b>Detected Class:</b> {scanResult.aiAnalysis.detectedClass}</p>
-                      <p><b>Quality:</b> {scanResult.aiAnalysis.quality}</p>
-                      <p><b>Disease:</b> {scanResult.aiAnalysis.disease}</p>
-                      <p><b>Confidence:</b> {(scanResult.aiAnalysis.confidence * 100).toFixed(1)}%</p>
-                      <p><b>Notes:</b> {scanResult.aiAnalysis.notes}</p>
-                    </div>
-                  )}
-                  <button style={{ ...buttonStyle, background: '#d32f2f', marginTop: 18 }} onClick={() => setShowModal(false)}>Close</button>
-                </div>
-              </div>
-            )}
-          </section>
+<section style={{
+  position: 'relative', // needed for the flag
+  background: COLORS.card,
+  borderRadius: 12,
+  boxShadow: COLORS.cardShadow,
+  padding: '18px 14px',
+  minWidth: 220,
+  maxWidth: 250,
+  flex: '1 1 220px',
+  marginBottom: 16,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
+}}>
+  {/* New Flag */}
+  <div style={{
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    background: '#ff5722',
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 600,
+    padding: '2px 8px',
+    borderRadius: 6,
+    zIndex: 5,
+    textTransform: 'uppercase',
+  }}>
+    New
+  </div>
+
+  <h2 style={cardTitle}>{t.uploadScan}</h2>
+
+  {/* Input + Mic + Camera in one line */}
+  <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
+    <input
+      type="text"
+      placeholder="Product Na.."
+      value={product}
+      onChange={e => setProduct(e.target.value)}
+      style={{ ...inputStyle, flex: 1 }} // flex:1 makes input expand
+    />
+
+    {/* Mic Button */}
+    <button
+      style={{
+        ...iconButtonStyle,
+        background: listening ? '#ffeb3b' : COLORS.card,
+        color: listening ? '#222' : COLORS.primary,
+        border: `2px solid ${COLORS.primary}`,
+      }}
+      title="Speak product name"
+      onClick={handleVoiceInput}
+    >
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={COLORS.primary} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="9" y="2" width="6" height="12" rx="3"/>
+        <path d="M5 10v2a7 7 0 0 0 14 0v-2"/>
+        <line x1="12" y1="22" x2="12" y2="18"/>
+        <line x1="8" y1="22" x2="16" y2="22"/>
+      </svg>
+    </button>
+
+    {/* Camera Button */}
+    <button
+      style={{ ...iconButtonStyle }}
+      title="Scan with Camera"
+      onClick={e => {
+        e.preventDefault();
+        if (fileInputRef.current) fileInputRef.current.click();
+        const rect = e.target.getBoundingClientRect();
+        dropFruits(rect);
+      }}
+      onMouseDown={e => {
+        const rect = e.target.getBoundingClientRect();
+        dropFruits(rect);
+      }}
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24">
+        <rect width="20" height="14" x="2" y="7" rx="3" fill="#388e3c"/>
+        <circle cx="12" cy="14" r="4" fill="#fff"/>
+        <circle cx="12" cy="14" r="2" fill="#388e3c"/>
+        <rect width="6" height="2" x="9" y="4" rx="1" fill="#388e3c"/>
+      </svg>
+    </button>
+
+    <input
+      id="cameraInput"
+      type="file"
+      accept="image/*"
+      capture="environment"
+      ref={fileInputRef}
+      style={{ display: 'none' }}
+      onChange={handleImageChange}
+    />
+  </div>
+
+  {/* Modal Popup for Scan Result */}
+  {showModal && scanResult && (
+    <div style={{...modalOverlayStyle, animation: 'notifSlide 0.5s cubic-bezier(.5,1.5,.5,1)'}} onClick={() => setShowModal(false)}>
+      <div style={{...modalStyle, transform: 'scale(1)', opacity: 1, transition: 'transform 0.4s cubic-bezier(.5,1.5,.5,1), opacity 0.4s'}} onClick={e => e.stopPropagation()}>
+        <h3 style={{ color: '#388e3c', marginBottom: 10 }}>Scan Result</h3>
+        <p><b>Product:</b> {scanResult.product}</p>
+        <p><b>Status:</b> <span style={{ color: scanResult.safeToUse ? '#388e3c' : '#d32f2f', fontWeight: 600 }}>{scanResult.safeToUse ? "Safe" : "Not Safe"}</span></p>
+        <p>{scanResult.message}</p>
+        {scanResult.aiAnalysis && (
+          <div style={{ marginTop: 16, background: '#f1f8e9', borderRadius: 8, padding: 12, textAlign: 'left' }}>
+            <h4 style={{ margin: '0 0 8px 0', color: '#388e3c' }}>AI Analysis</h4>
+            <p><b>Detected Class:</b> {scanResult.aiAnalysis.detectedClass}</p>
+            <p><b>Quality:</b> {scanResult.aiAnalysis.quality}</p>
+            <p><b>Disease:</b> {scanResult.aiAnalysis.disease}</p>
+            <p><b>Confidence:</b> {(scanResult.aiAnalysis.confidence * 100).toFixed(1)}%</p>
+            <p><b>Notes:</b> {scanResult.aiAnalysis.notes}</p>
+          </div>
+        )}
+        <button style={{ ...buttonStyle, background: '#d32f2f', marginTop: 18 }} onClick={() => setShowModal(false)}>Close</button>
+      </div>
+    </div>
+  )}
+</section>
+
+
           {/* Weather Card */}
           <section style={{
-            background: COLORS.card,
-            borderRadius: 12,
-            boxShadow: COLORS.cardShadow,
-            padding: '18px 14px',
-            minWidth: 220,
-            maxWidth: 250,
-            flex: '1 1 220px',
-            marginBottom: 16,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
-          }}>
-            <h2 style={cardTitle}>
-              {/* Weather SVG icon */}
-              <span style={{ verticalAlign: 'middle', marginRight: 8 }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="6" fill="#ffeb3b" stroke="#fbc02d" strokeWidth="2"/>
-                  <g stroke="#fbc02d" strokeWidth="2">
-                    <line x1="12" y1="2" x2="12" y2="5"/>
-                    <line x1="12" y1="19" x2="12" y2="22"/>
-                    <line x1="2" y1="12" x2="5" y2="12"/>
-                    <line x1="19" y1="12" x2="22" y2="12"/>
-                    <line x1="4.2" y1="4.2" x2="6.3" y2="6.3"/>
-                    <line x1="17.7" y1="17.7" x2="19.8" y2="19.8"/>
-                    <line x1="4.2" y1="19.8" x2="6.3" y2="17.7"/>
-                    <line x1="17.7" y1="6.3" x2="19.8" y2="4.2"/>
-                  </g>
-                </svg>
-              </span>
-              {t.weatherPrediction}
-            </h2>
-            <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
-              <button style={iconButtonStyle} title="Get Weather" onClick={fetchWeather}>
-                {/* Cloud SVG icon */}
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
-                  <ellipse cx="12" cy="17" rx="7" ry="4" fill="#90caf9"/>
-                  <ellipse cx="16" cy="15" rx="5" ry="3" fill="#64b5f6"/>
-                </svg>
-              </button>
-              <button style={iconButtonStyle} title="Detect Location" onClick={fetchGeoLocation}>
-                {/* Location SVG icon */}
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
-                  <circle cx="12" cy="10" r="3" fill="#388e3c"/>
-                  <path d="M12 2C7 2 3 6.03 3 11.25c0 4.13 3.4 7.98 8.1 10.6a2 2 0 0 0 1.8 0C17.6 19.23 21 15.38 21 11.25 21 6.03 17 2 12 2Z" stroke="#388e3c" strokeWidth="2" fill="none"/>
-                </svg>
-              </button>
-            </div>
-            {weather && (
-              <div style={{ marginTop: 18 }}>
-                <p><b>Location:</b> {weather.location}</p>
-                <p><b>Temperature:</b> {weather.temperature}</p>
-                <p><b>Condition:</b> {weather.condition}</p>
-                <p><b>Prediction:</b> {weather.prediction}</p>
-              </div>
-            )}
-            {geoLocation && (
-              <div style={{ marginTop: 8, fontSize: 13, color: '#388e3c' }}>
-                <span>Detected: {geoLocation.city || ''}{geoLocation.region ? ', ' + geoLocation.region : ''}{geoLocation.country ? ', ' + geoLocation.country : ''}</span>
-              </div>
-            )}
-          </section>
+  position: 'relative', // needed for the flag
+  background: COLORS.card,
+  borderRadius: 12,
+  boxShadow: COLORS.cardShadow,
+  padding: '18px 14px',
+  minWidth: 220,
+  maxWidth: 250,
+  flex: '1 1 220px',
+  marginBottom: 16,
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  animation: 'cardEntrance 0.9s cubic-bezier(.5,1.5,.5,1)',
+}}>
+  {/* New Flag */}
+  <div style={{
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    background: '#ff5722',
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 600,
+    padding: '2px 8px',
+    borderRadius: 6,
+    zIndex: 5,
+    textTransform: 'uppercase',
+  }}>
+    New
+  </div>
+
+  <h2 style={cardTitle}>
+    {/* Weather SVG icon */}
+    <span style={{ verticalAlign: 'middle', marginRight: 8 }}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="6" fill="#ffeb3b" stroke="#fbc02d" strokeWidth="2"/>
+        <g stroke="#fbc02d" strokeWidth="2">
+          <line x1="12" y1="2" x2="12" y2="5"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+          <line x1="2" y1="12" x2="5" y2="12"/>
+          <line x1="19" y1="12" x2="22" y2="12"/>
+          <line x1="4.2" y1="4.2" x2="6.3" y2="6.3"/>
+          <line x1="17.7" y1="17.7" x2="19.8" y2="19.8"/>
+          <line x1="4.2" y1="19.8" x2="6.3" y2="17.7"/>
+          <line x1="17.7" y1="6.3" x2="19.8" y2="4.2"/>
+        </g>
+      </svg>
+    </span>
+    {t.weatherPrediction}
+  </h2>
+
+  <div style={{ display: 'flex', gap: 10, marginBottom: 10 }}>
+    <button style={iconButtonStyle} title="Get Weather" onClick={fetchWeather}>
+      {/* Cloud SVG icon */}
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
+        <ellipse cx="12" cy="17" rx="7" ry="4" fill="#90caf9"/>
+        <ellipse cx="16" cy="15" rx="5" ry="3" fill="#64b5f6"/>
+      </svg>
+    </button>
+    <button style={iconButtonStyle} title="Detect Location" onClick={fetchGeoLocation}>
+      {/* Location SVG icon */}
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
+        <circle cx="12" cy="10" r="3" fill="#388e3c"/>
+        <path d="M12 2C7 2 3 6.03 3 11.25c0 4.13 3.4 7.98 8.1 10.6a2 2 0 0 0 1.8 0C17.6 19.23 21 15.38 21 11.25 21 6.03 17 2 12 2Z" stroke="#388e3c" strokeWidth="2" fill="none"/>
+      </svg>
+    </button>
+  </div>
+
+  {weather && (
+    <div style={{ marginTop: 18 }}>
+      <p><b>Location:</b> {weather.location}</p>
+      <p><b>Temperature:</b> {weather.temperature}</p>
+      <p><b>Condition:</b> {weather.condition}</p>
+      <p><b>Prediction:</b> {weather.prediction}</p>
+    </div>
+  )}
+
+  {geoLocation && (
+    <div style={{ marginTop: 8, fontSize: 13, color: '#388e3c' }}>
+      <span>Detected: {geoLocation.city || ''}{geoLocation.region ? ', ' + geoLocation.region : ''}{geoLocation.country ? ', ' + geoLocation.country : ''}</span>
+    </div>
+  )}
+</section>
+
           {/* Market Prices Card */}
-          <section style={{
-            background: COLORS.card,
-            borderRadius: 12,
-            boxShadow: COLORS.cardShadow,
-            padding: '18px 14px',
-            minWidth: 220,
-            maxWidth: 250,
-            flex: '1 1 220px',
-            marginBottom: 16,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}>
-            <h2 style={cardTitle}>
-              {/* Market SVG icon */}
-              <span style={{ verticalAlign: 'middle', marginRight: 8 }}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24">
-                  <rect x="3" y="10" width="4" height="8" rx="1" fill="#8bc34a"/>
-                  <rect x="9" y="6" width="4" height="12" rx="1" fill="#388e3c"/>
-                  <rect x="15" y="13" width="4" height="5" rx="1" fill="#cddc39"/>
-                </svg>
-              </span>
-              {t.marketPrices}
-            </h2>
-            <button style={iconButtonStyle} title="Get Prices" onClick={fetchMarket}>
-              {/* Rupee SVG icon */}
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
-                <text x="6" y="20" fontSize="18" fill="#388e3c" fontFamily="Arial">₹</text>
-              </svg>
-            </button>
-            <ul style={{ marginTop: 18, paddingLeft: 18 }}>
-              {market.map((item, idx) => (
-                <li key={idx} style={{ fontSize: 17, marginBottom: 6 }}>
-                  <b>{item.product}:</b> {item.price}
-                </li>
-              ))}
-            </ul>
-          </section>
+          <section
+  style={{
+    position: 'relative', // needed for the badge positioning
+    background: COLORS.card,
+    borderRadius: 12,
+    boxShadow: COLORS.cardShadow,
+    padding: '18px 14px',
+    minWidth: 220,
+    maxWidth: 250,
+    flex: '1 1 220px',
+    marginBottom: 16,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  }}
+>
+  {/* LIVE Badge (Top-Left Corner) */}
+  <div
+    style={{
+      position: 'absolute',
+      top: -8,
+      left: -8,
+      background: '#ff5252',
+      color: '#fff',
+      fontSize: 10,
+      fontWeight: 'bold',
+      padding: '4px 8px',
+      borderRadius: '8px',
+      boxShadow: '0 2px 6px rgba(0,0,0,0.2)',
+      transform: 'rotate(-10deg)',
+      zIndex: 10,
+    }}
+  >
+    LIVE
+  </div>
+
+  <h2 style={cardTitle}>
+    {/* Market SVG icon */}
+    <span style={{ verticalAlign: 'middle', marginRight: 8 }}>
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24">
+        <rect x="3" y="10" width="4" height="8" rx="1" fill="#8bc34a"/>
+        <rect x="9" y="6" width="4" height="12" rx="1" fill="#388e3c"/>
+        <rect x="15" y="13" width="4" height="5" rx="1" fill="#cddc39"/>
+      </svg>
+    </span>
+    {t.marketPrices}
+  </h2>
+
+  <button style={iconButtonStyle} title="Get Prices" onClick={fetchMarket}>
+    {/* Rupee SVG icon */}
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24">
+      <text x="6" y="20" fontSize="18" fill="#388e3c" fontFamily="Arial">₹</text>
+    </svg>
+  </button>
+
+  <ul style={{ marginTop: 18, paddingLeft: 18 }}>
+    {market.map((item, idx) => (
+      <li key={idx} style={{ fontSize: 17, marginBottom: 6 }}>
+        <b>{item.product}:</b> {item.price}
+      </li>
+    ))}
+  </ul>
+</section>
+
         </div>
       </div>
       {/* Footer */}
@@ -810,6 +958,51 @@ function App() {
       }}>
         &copy; {new Date().getFullYear()} AgriNext
       </footer>
+      
+      {/* Voice Assistant Button */}
+      <button
+        style={{
+          position: 'fixed',
+          bottom: 100,
+          right: 32,
+          zIndex: 5000,
+          background: COLORS.primary,
+          color: COLORS.buttonText,
+          border: 'none',
+          borderRadius: '50%',
+          width: 60,
+          height: 60,
+          boxShadow: COLORS.cardShadow,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 32,
+          cursor: 'pointer',
+          transition: 'background 0.2s, box-shadow 0.2s, transform 0.1s',
+          outline: 'none',
+          animation: 'buttonPop 0.7s',
+        }}
+        title="Voice Assistant"
+        onClick={handleVoiceInput}
+      >
+        <span role="img" aria-label="Voice Assistant"><svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="28"
+  height="28"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  strokeWidth="2"
+  strokeLinecap="round"
+  strokeLinejoin="round"
+>
+  <rect x="9" y="2" width="6" height="12" rx="3" />
+  <path d="M5 10v2a7 7 0 0 0 14 0v-2" />
+  <line x1="12" y1="22" x2="12" y2="18" />
+  <line x1="8" y1="22" x2="16" y2="22" />
+</svg></span>
+      </button>
+      
       {/* Floating Chat Button */}
       <button
         style={{
