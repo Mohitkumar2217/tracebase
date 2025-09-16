@@ -78,7 +78,26 @@ function App() {
       askAnything: 'Ask me anything about farming, weather, or market prices!',
       send: 'Send',
       close: 'Close',
-    },
+    },pa: {
+    scanProduct: "ਉਤਪਾਦ ਸਕੈਨ ਕਰੋ",
+    enterProduct: "ਉਤਪਾਦ ਦਾ ਨਾਮ ਦਰਜ ਕਰੋ",
+    speakProduct: "ਉਤਪਾਦ ਦਾ ਨਾਮ ਬੋਲੋ",
+    uploadScan: "ਫੋਟੋ ਅੱਪਲੋਡ/ਸਕੈਨ ਕਰੋ",
+    diseasePest: "ਬਿਮਾਰੀ ਅਤੇ ਕੀਟ ਪਤਾ ਲਗਾਓ",
+    healthy: "ਸਿਹਤਮੰਦ",
+    diseaseDetected: "ਬਿਮਾਰੀ ਮਿਲੀ",
+    pestDetected: "ਕੀਟ ਮਿਲੇ",
+    analyzing: "ਚਿੱਤਰ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
+    cropCalendar: "ਫਸਲ ਕੈਲੰਡਰ",
+    selectCrop: "ਫਸਲ ਚੁਣੋ:",
+    keyDates: "ਮੁੱਖ ਤਾਰੀਖਾਂ:",
+    weatherPrediction: "ਮੌਸਮ ਭਵਿੱਖਬਾਣੀ",
+    marketPrices: "ਬਾਜ਼ਾਰ ਭਾਵ",
+    chatbot: "AgriScan ਚੈਟਬੋਟ",
+    askAnything: "ਮੈਨੂੰ ਖੇਤੀਬਾੜੀ, ਮੌਸਮ ਜਾਂ ਬਾਜ਼ਾਰ ਭਾਵ ਬਾਰੇ ਕੁਝ ਵੀ ਪੁੱਛੋ!",
+    send: "ਭੇਜੋ",
+    close: "ਬੰਦ ਕਰੋ",
+  },
     hi: {
       scanProduct: 'उत्पाद स्कैन करें',
       enterProduct: 'उत्पाद का नाम दर्ज करें',
@@ -359,6 +378,7 @@ function App() {
             <option value="en">English</option>
             <option value="hi">हिन्दी</option>
             <option value="ta">தமிழ்</option>
+            <option value="pa">ਗੁਰਮੁਖੀ</option>
           </select>
           {/* Vendor Verse Button */}
           <button
