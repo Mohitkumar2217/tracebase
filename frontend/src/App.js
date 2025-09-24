@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import { injectAnimationStyles } from "./AnimationStyles";
+import MyApp from "./pages/_app";
 
 // --- Green-White Color Palette ---
 const COLORS = {
