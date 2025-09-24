@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import ReadPopup from "./ReadPopup";
 import { injectAnimationStyles } from "./AnimationStyles";
 
 // --- Green-White Color Palette ---
@@ -1665,6 +1665,8 @@ const fetchMarket = () => {
           </div>
         </div>
       )}
+          {/* Floating popup button */}
+      <ReadPopup />
     </div>
   );
 }
