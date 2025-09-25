@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import axios from "axios";
 import { GoogleGenAI } from "@google/genai";
 
 dotenv.config(); 
@@ -52,30 +53,39 @@ app.post("/generate-text", async (req, res) => {
   }
 });
 
-// Weather API route
+
 app.get("/api/weather", async (req, res) => {
   try {
-    const city = req.query.city || "Delhi"; // default city
+    const city = req.query.city || "Delhi";
     const apiKey = process.env.API_KEY;
 
-    // OpenWeatherMap API call
+    console.log("Fetching weather for:", city);
+    console.log("Using API key:", apiKey ? "Yes" : "No");
+
     const response = await axios.get(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
     );
 
     const data = response.data;
+    console.log("OpenWeatherMap response:", data);
 
-    // Send simplified response
     res.json({
-      city: data.name,
-      temp: `${data.main.temp}°C`,
+      location: data.name,
+      temperature: `${data.main.temp}°C`,
       condition: data.weather[0].description,
+      prediction: "Fallback weather from backend",
     });
   } catch (error) {
     console.error("Weather API error:", error.response?.data || error.message);
-    res.status(500).json({ error: "Failed to fetch weather data" });
+    res.status(500).json({
+      location: "N/A",
+      temperature: "N/A",
+      condition: "N/A",
+      prediction: "Failed to fetch weather data",
+    });
   }
 });
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
