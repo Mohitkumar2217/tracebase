@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 
 import { injectAnimationStyles } from "./AnimationStyles";
-import MyApp from "./pages/_app";
 
 // --- Green-White Color Palette ---
 const COLORS = {
@@ -218,6 +217,7 @@ function App() {
   const [chatHistory, setChatHistory] = useState([]);
 
   // Send message to chatbot endpoint
+
   const sendChatMessage = async (e) => {
     e.preventDefault();
     if (!chatInput.trim()) return;
@@ -225,14 +225,14 @@ function App() {
     setChatHistory((h) => [...h, { from: "user", text: userMsg }]);
     setChatInput("");
     try {
-      const res = await axios.post("http://localhost:5000/api/chat", {
-        message: userMsg,
+      const res = await axios.post("http://localhost:5000/generate-text", {
+        prompt: userMsg,
       });
       setChatHistory((h) => [...h, { from: "bot", text: res.data.reply }]);
     } catch (err) {
       setChatHistory((h) => [
         ...h,
-        { from: "bot", text: "Sorry, I couldn't connect to the chatbot." },
+        { from: "bot", text:  `${err}` },
       ]);
     }
   };
