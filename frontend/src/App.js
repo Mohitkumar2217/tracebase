@@ -224,7 +224,7 @@ function App() {
     setChatHistory((h) => [...h, { from: "user", text: userMsg }]);
     setChatInput("");
     try {
-      const res = await axios.post("http://localhost:5000/generate-text", {
+      const res = await axios.post("https://tracebase.onrender.com/generate-text", {
         prompt: userMsg,
       });
       setChatHistory((h) => [...h, { from: "bot", text: res.data.reply }]);
@@ -332,7 +332,7 @@ function App() {
       }
     }
     // fallback to backend static data
-    const res = await axios.get("http://192.168.56.1:5000/api/weather");
+    const res = await axios.get("https://tracebase.onrender.com/api/weather");
     setWeather(res.data);
   };
 
@@ -684,7 +684,7 @@ const fetchMarket = () => {
             <button
               style={{ ...buttonStyle, marginBottom: 10, width: "100%" }}
               onClick={() =>
-                window.open("http://localhost:5000/vendorverse", "_blank")
+                window.open("https://tracebase.onrender.com/vendorverse", "_blank")
               }
               disabled
             >
