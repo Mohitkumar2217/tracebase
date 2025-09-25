@@ -3,8 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { GoogleGenAI } from "@google/genai";
 
-dotenv.config();
-
+dotenv.config(); 
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -50,6 +49,31 @@ app.post("/generate-text", async (req, res) => {
       return res.status(400).json({ reply: "Bad request to Gemini API" });
     }
     res.status(500).json({ reply: "Internal Server Error" });
+  }
+});
+
+// Weather API route
+app.get("/api/weather", async (req, res) => {
+  try {
+    const city = req.query.city || "Delhi"; // default city
+    const apiKey = process.env.API_KEY;
+
+    // OpenWeatherMap API call
+    const response = await axios.get(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+    );
+
+    const data = response.data;
+
+    // Send simplified response
+    res.json({
+      city: data.name,
+      temp: `${data.main.temp}°C`,
+      condition: data.weather[0].description,
+    });
+  } catch (error) {
+    console.error("Weather API error:", error.response?.data || error.message);
+    res.status(500).json({ error: "Failed to fetch weather data" });
   }
 });
 
