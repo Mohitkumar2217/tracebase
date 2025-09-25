@@ -34,6 +34,11 @@ app.post("/generate-text", async (req, res) => {
           ]
         }
       ],
+      config: {
+        thinkingConfig: {
+          thinkingBudget: 0, // Disables thinking
+        },
+      }
     });
 
     const replyText = result.text;  // the SDK returns `.text` property
