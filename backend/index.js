@@ -18,7 +18,7 @@ app.post("/generate-text", async (req, res) => {
       model: "gemini-2.5-flash",
       contents: [{ role: "user", content: userMsg }],
     });
-    res.json({ reply: response.choices[0].message.content });
+    res.json({ reply: response.text });
   } catch (err) {
     console.error("OpenAI Error:", err);
     res.status(500).json({ reply: "Internal Server Error" });
