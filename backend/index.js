@@ -17,7 +17,13 @@ app.post("/generate-text", async (req, res) => {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: [{ role: "user", content: userMsg }],
+      config: {
+        thinkingConfig: {
+          thinkingBudget: 0, // Disables thinking
+        },
+      }
     });
+
     res.json({ reply: response.text });
   } catch (err) {
     console.error("OpenAI Error:", err);
